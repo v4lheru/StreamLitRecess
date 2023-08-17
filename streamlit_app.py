@@ -1,19 +1,17 @@
 import streamlit as st
 import requests
 
-# Configuration
-YOUR_GENERATED_SECRET = "CIRhQqBVNwVwTEeB7qsV:e7cfa93256ee61392eea569109d7ecf0df1257217da729f6b9068c2565079948"
-url = "https://api.promptperfect.jina.ai/q2jb2ZpjQ23hUPjN4Xza"
-headers = {
-    "x-api-key": f"token {YOUR_GENERATED_SECRET}",
-    "Content-Type": "application/json"
-}
-
 # Title of the Streamlit application
-st.title("Keyword-based Blog Generator with Claude")
+st.title("Keyword-based Blog Generator")
 
 # Input for keywords
 keywords = st.text_input('Enter the keywords for the blog:')
+
+# Configuration
+url = "https://api.promptperfect.jina.ai/q2jb2ZpjQ23hUPjN4Xza"
+headers = {
+    "Content-Type": "application/json"
+}
 
 # Function to call the API
 def generate_blog(keywords):
