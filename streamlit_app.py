@@ -1,25 +1,18 @@
-import streamlit as st
+#!pip install requests
 import requests
 
-API_URL = "https://flowise-production-647d.up.railway.app/api/v1/prediction/52211d51-9c75-4e75-9331-1f5d76a3a5fa"
+YOUR_GENERATED_SECRET = "your_secret_here"
 
-def query(payload):
-    response = requests.post(API_URL, json=payload)
-    return response.json()
+url = "https://api.promptperfect.jina.ai/q2jb2ZpjQ23hUPjN4Xza"
 
-def generate_response(topic):
-    # Prompt
-    template = 'As an experienced data scientist and technical writer, generate an outline for a blog about {topic}.'
-    prompt_query = template.format(topic=topic)
-    # Query Claude-2 model using Flowise API and print out response
-    response = query({"question": prompt_query})
-    return st.info(response['answer'])  # Assuming 'answer' key in the response
+headers = {
+    "x-api-key": f"token {YOUR_GENERATED_SECRET}",
+    "Content-Type": "application/json"
+}
 
-st.set_page_config(page_title="🦜🔗 Blog Outline Generator App")
-st.title('🦜🔗 Blog Outline Generator App')
 
-with st.form('myform'):
-    topic_text = st.text_input('Enter keyword:', '')
-    submitted = st.form_submit_button('Submit')
-    if submitted:
-        generate_response(topic_text)
+response = requests.post(url, headers=headers, json={"parameters": {"2":"YOUR_VALUE","3":"YOUR_VALUE","10":"YOUR_VALUE","Markdown":"YOUR_VALUE"}})
+if response.status_code == 200:
+  print(response.json())
+else:
+  print(response.text)
