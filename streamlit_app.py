@@ -2,7 +2,7 @@ import streamlit as st
 import requests
 
 # Configuration
-YOUR_GENERATED_SECRET = "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"
+YOUR_GENERATED_SECRET = "CIRhQqBVNwVwTEeB7qsV:e7cfa93256ee61392eea569109d7ecf0df1257217da729f6b9068c2565079948"
 url = "https://api.promptperfect.jina.ai/q2jb2ZpjQ23hUPjN4Xza"
 headers = {
     "x-api-key": f"token {YOUR_GENERATED_SECRET}",
