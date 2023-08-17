@@ -28,4 +28,8 @@ def generate_blog(keywords):
 # Generate blog button
 if st.button('Generate Blog'):
     result = generate_blog(keywords)
-    st.write(result)  # Displaying the generated blog content
+    if 'content' in result:  # Assuming 'content' key holds the Markdown content
+        markdown_content = result['content']
+        st.markdown(markdown_content)  # Rendering the Markdown content
+    else:
+        st.write(result)  # Displaying the response in case of an error
