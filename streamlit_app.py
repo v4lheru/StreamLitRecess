@@ -1,28 +1,25 @@
 import streamlit as st
-from chatbots.claude import Claude
+from anthropic import Claude2
+from langchain import PromptTemplate
 
-# Configuration
-ANTHROPIC_API_KEY = "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"  # Replace with your actual API key
-model = "claude-2"  # You can replace this with your desired model
-temperature = 0.1
+st.set_page_config(page_title="🦜🔗 Blog Outline Generator App")
+st.title('🦜🔗 Blog Outline Generator App')
+anthropic_api_key = st.sidebar.text_input('Anthropic API Key', type='password')
 
-st.title("Keyword-based Blog Generator")
+def generate_response(topic):
+  claude2_model = Claude2(model_name='claude-2', anthropic_api_key=anthropic_api_key)
+  # Prompt
+  template = 'As an experienced data scientist and technical writer, generate an outline for a blog about {topic}.'
+  prompt = PromptTemplate(input_variables=['topic'], template=template)
+  prompt_query = prompt.format(topic=topic)
+  # Run Claude-2 model and print out response
+  response = claude2_model(prompt_query)
+  return st.info(response)
 
-# Initialization
-if "bot" not in st.session_state:
-    st.session_state.bot = Claude(api_key=ANTHROPIC_API_KEY, model=model, temperature=temperature)
-
-# Input for keywords
-keywords = st.text_input('Enter the keywords for the blog:')
-
-# Generate blog button
-if st.button('Generate Blog'):
-    # Constructing the prompt
-    prompt = f"Write a blog post about {keywords}"
-
-    # Generating the blog content
-    full_response = ""
-    for response in st.session_state.bot.ask_llm(prompt, stream=True):
-        full_response += response
-
-    st.write(full_response)  # Displaying the generated blog content
+with st.form('myform'):
+  topic_text = st.text_input('Enter keyword:', '')
+  submitted = st.form_submit_button('Submit')
+  if not anthropic_api_key.startswith('sk-'):
+    st.warning('Please enter your Anthropic API key!', icon='⚠')
+  if submitted and anthropic_api_key.startswith('sk-'):
+    generate_response(topic_text)
