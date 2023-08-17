@@ -21,7 +21,7 @@ if st.button('Generate Blog'):
         'accept': 'application/json',
         'anthropic-version': '2023-06-01',
         'content-type': 'application/json',
-        'x-api-key': '$ANTHROPIC_API_KEY' # Replace with your actual API key
+        'x-api-key': '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' # Replace with your actual API key
     }
 
     # Data
